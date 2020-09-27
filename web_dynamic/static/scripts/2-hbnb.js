@@ -17,4 +17,12 @@ $(document).ready(function () {
 	}
 	$('DIV.amenities h4').text(amenitiesNames.join(', '));
     });
+    const request = $.getJSON('http://0.0.0.0:5001/api/v1/status/');
+    request.done(function (data) {
+	if (data.status === 'OK') {
+	    $('DIV #api_status').addClass('available');
+	else {
+	    $('DIV #api_status').removeClass('available');
+	}
+    });	
 });
