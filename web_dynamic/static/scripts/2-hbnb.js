@@ -20,9 +20,10 @@ $(document).ready(function () {
     const request = $.getJSON('http://0.0.0.0:5001/api/v1/status/');
     request.done(function (data) {
 	if (data.status === 'OK') {
-	    $('DIV #api_status').addClass('available');
-	else {
-	    $('DIV #api_status').removeClass('available');
+	    console.log(data.status);
+	    $('DIV#api_status').addClass('available');
+	} else {
+	    $('DIV#api_status').removeClass('available');
 	}
-    });	
+    });
 });
