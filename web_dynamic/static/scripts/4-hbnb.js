@@ -1,21 +1,13 @@
 const $ = window.$;
-const amenitiesIds = [];
-const amenitiesNames = [];
+const amenities = {};
 $(document).ready(function () {
     $('input').click(function () {
-	const amenityId = $(this).data('id');
-	const amenityName = $(this).data('name');
-	if (amenitiesIds.includes(amenityId)) {
-            const index = amenitiesIds.indexOf(amenityId);
-            if (index !== -1) {
-		amenitiesIds.splice(index, 1);
-		amenitiesNames.splice(index, 1);
-            }
+	if ($(this).is(':checked')) {
+            amenities[($(this).attr('data-name'))] = ($(this).attr('data-id'));
 	} else {
-            amenitiesIds.push(amenityId);
-	    amenitiesNames.push(amenityName);
+	    delete amenities[($(this).attr('data-name'))];
 	}
-	$('DIV.amenities h4').text(amenitiesNames.join(', '));
+	$('DIV.amenities h4').text(Object.keys(amenities).join(', '));
     });
     const request = $.getJSON('http://0.0.0.0:5001/api/v1/status/');
     request.done(function (data) {
@@ -29,7 +21,7 @@ $(document).ready(function () {
 y    $.ajax({
     url: 'http://localhost:5001/api/v1/places_search/',
     type: 'POST',
-    data: JSON.stringify({}),
+    data: JSON.stringify({amenities}),
     contentType:"application/json; charset=utf-8",
     success: function (response) {
     for (const place of response) {
